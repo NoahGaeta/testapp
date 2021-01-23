@@ -9,13 +9,14 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageSelected: false,
+      imageSelected: true,
       detectedCode: undefined
     }
   }
 
   updateDetectedCode(detectedCode) {
     this.setState({ detectedCode });
+    setTimeout(() => {this.setState({ detectedCode: undefined })}, 5000);
   }
 
   render() {

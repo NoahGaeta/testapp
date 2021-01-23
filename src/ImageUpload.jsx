@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserMultiFormatReader } from '@zxing/library';
+import { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } from '@zxing/library';
 
 export default class ImageUploader extends Component {
     constructor(props) {
@@ -10,7 +10,9 @@ export default class ImageUploader extends Component {
         const reader = new FileReader();
         reader.onload = (fileUpload) => {
             console.log('FILE', fileUpload)
-            const decoder = new BrowserMultiFormatReader();
+            const hints = new Map();
+            hints.set(DecodeHintType.PURE_BARCODE);
+            const decoder = new BrowserMultiFormatReader(hints);
             decoder.decodeFromImage(undefined, fileUpload.target.result).then((decodeResult) => {
                 this.props.updateDetectedCode(decodeResult.getText());
             }).catch((err) => {
